@@ -1,1 +1,1 @@
-# RustyCryptographyKit
+# rusty_cryptography_kit
