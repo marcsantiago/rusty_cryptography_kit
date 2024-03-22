@@ -36,7 +36,10 @@ mod test {
     fn test_encode() {
         // Encode
         assert_eq!("Se arrxts, oeu tuh cchdr nzly dcnxwh pfu. Oh dpkhbxvd, nqd ealm nzly pavx fcl khrlr wxhrvi -Wuhew Hm Hzde", encode("Be normal, and the crowd will accept you. Be deranged, and they will make you their leader -Wheel Of Time", "randalthor"));
-        
+    }
+
+    #[test]
+    fn test_decode() {
         // Decode
         assert_eq!("Be normal, and the crowd will accept you. Be deranged, and they will make you their leader -Wheel Of Time", decode("Se arrxts, oeu tuh cchdr nzly dcnxwh pfu. Oh dpkhbxvd, nqd ealm nzly pavx fcl khrlr wxhrvi -Wuhew Hm Hzde", "randalthor"));
     }

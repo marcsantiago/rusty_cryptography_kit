@@ -1,34 +1,22 @@
 pub fn encode(message: &str, key: u8) -> String {
     let key = key % 26;
-    handle(message, key as isize)
+    handle(message, key, true)
 }
 
 
 pub fn decode(message: &str, key: u8) -> String {
     let key = key % 26;
-    let key: isize = (key as isize) * -1;
-    handle(message, key)
+    handle(message, key, false)
 }
 
-fn handle(message: &str, key: isize) -> String {
+fn handle(message: &str, key: u8, encode: bool) -> String {
     message.chars().
         map(|ch|
             if ch.is_alphabetic() {
-                let mut value = (ch as isize) + key;
-                if ch.is_ascii_uppercase() {
-                    if value < 'A' as isize {
-                        value += 26;
-                    } else if value > 'Z' as isize {
-                        value -= 26;
-                    }
-                } else if ch.is_ascii_lowercase() {
-                    if value < 'a' as isize {
-                        value += 26;
-                    } else if value > 'z' as isize {
-                        value -= 26;
-                    }
-                }
-                (value as u8) as char
+                let base = if ch.is_ascii_uppercase() { 'A' as u8 } else { 'a' as u8 };
+                let ch = ch as u8;
+                let key = if encode { key } else { 26 - key };
+                (base + (ch - base + key) % 26) as char
             } else {
                 ch
             }
@@ -42,12 +30,16 @@ mod test {
     #[test]
     fn test_encode() {
         // Encode
+        assert_eq!("aaaa", &encode("aaaa", 0));
         assert_eq!("bbbb", &encode("aaaa", 1));
         assert_eq!("zzzz", &encode("aaaa", 25));
         assert_eq!("aaaa", &encode("aaaa", 26));
         assert_eq!("bbbb", &encode("aaaa", 27));
         assert_eq!("gggg26QQGHpgnyfd", &encode("aaaa26KKABjahszx", 6));
+    }
 
+    #[test]
+    fn test_decode() {
         // Decode
         assert_eq!("aaaa", &decode("bbbb", 1));
         assert_eq!("aaaa", &decode("zzzz", 25));
