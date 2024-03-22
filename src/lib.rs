@@ -1,5 +1,6 @@
-mod atbash_cipher;
-mod ceaser_cipher;
-mod vigenere_cipher;
-mod one_time_pad;
-mod english_support;
+pub mod atbash_cipher;
+pub mod ceaser_cipher;
+pub mod vigenere_cipher;
+pub mod one_time_pad;
+pub mod english_support;
+pub mod rot13;
