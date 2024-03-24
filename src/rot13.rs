@@ -1,6 +1,4 @@
-pub fn encode(message: &str) -> String {
-    crate::caeser_cipher::encode(message, 13)
-}
+pub fn encode(message: &str) -> String { crate::caeser_cipher::encode(message, 13) }
 
 
 pub fn decode(message: &str) -> String {

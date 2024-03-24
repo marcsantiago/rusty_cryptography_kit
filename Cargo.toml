@@ -11,3 +11,5 @@ path = "src/lib.rs"
 
 [dependencies]
 anyhow = "1.0.81"
+rand = "0.9.0-alpha.1"
+base64 = "0.22.0"
