@@ -1,2 +1,2 @@
 pub mod trie;
-mod detect_english;
+pub mod detect_english;
