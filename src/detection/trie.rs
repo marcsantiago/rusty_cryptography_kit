@@ -1,6 +1,8 @@
 use std::collections::HashMap;
-use std::io::Write;
+use std::io::{Read, Write};
 
+use flate2::bufread::GzEncoder;
+use flate2::read::GzDecoder;
 use serde::{Deserialize, Serialize};
 
 // https://dev.to/timclicks/two-trie-implementations-in-rust-ones-super-fast-2f3m
@@ -48,18 +50,17 @@ impl Trie {
             .map_err(|e| anyhow::anyhow!("Failed to parse json: {}", e))
     }
 
-    pub fn from_json(json: &str) -> Self {
-        serde_json::from_str(json).unwrap()
-    }
-
     pub fn from_json_file(file_path: &str) -> anyhow::Result<Self> {
-        let json = std::fs::read_to_string(file_path)?;
-        Ok(Self::from_json(&json))
+        let f = std::fs::File::open(file_path)?;
+        let mut decoder = GzDecoder::new(f);
+        let mut buffer = Vec::new();
+        decoder.read_to_end(&mut buffer)?;
+        Ok(serde_json::from_slice(&buffer)?)
     }
 
     pub fn to_json_file(&self, file_path: &str) -> anyhow::Result<()> {
         let json = self.to_json()?;
-        let mut encoder = flate2::write::GzEncoder::new(Vec::new(), flate2::Compression::best());
+        let mut encoder = GzEncoder::new(Vec::new(), flate2::Compression::best());
         encoder.write_all(json.as_bytes())?;
         let buffer = encoder.finish()?;
         std::fs::write(file_path, buffer)?;
