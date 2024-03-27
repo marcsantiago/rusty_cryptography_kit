@@ -28,6 +28,6 @@ impl Detector {
                 english_matches += 1;
             }
         }
-        (total_words as f64 / english_matches as f64) >= self.threshold;
+        (total_words as f64 / english_matches as f64) >= self.threshold
     }
 }
