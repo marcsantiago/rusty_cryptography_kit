@@ -7,7 +7,7 @@ struct KeyGenerator {
     generated_key: String,
 }
 
-#[allow(dead_code)]
+
 impl KeyGenerator {
     fn new() -> Self {
         KeyGenerator {
@@ -35,7 +35,7 @@ pub struct PadResponse {
     pub encoded_message: String,
 }
 
-#[allow(dead_code)]
+
 fn encode(message: &str) -> PadResponse {
     let mut key = KeyGenerator::new();
     let mut encoded_message = String::new();
@@ -56,7 +56,7 @@ fn encode(message: &str) -> PadResponse {
     }
 }
 
-#[allow(dead_code)]
+
 fn decode(message: &str, key: &str) -> anyhow::Result<String> {
     let config = engine::GeneralPurposeConfig::new()
         .with_decode_padding_mode(engine::DecodePaddingMode::Indifferent);
