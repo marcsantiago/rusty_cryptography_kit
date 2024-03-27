@@ -9,6 +9,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Default, Debug, Serialize, Deserialize)]
 struct TrieNode {
     is_end_of_word: bool,
+    #[serde(skip_serializing_if = "HashMap::is_empty")]
+    #[serde(default)]
     children: HashMap<u8, TrieNode>,
 }
 
