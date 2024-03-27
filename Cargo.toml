@@ -7,10 +7,24 @@ edition = "2021"
 name = "rusty_cryptography_kit"
 path = "src/lib.rs"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "trie_loader"
+path = "src/bin/trie_loader/main.rs"
+required-features = ["build_binary"]
+
 
 [dependencies]
 anyhow = "1.0.81"
 rand = "0.9.0-alpha.1"
 base64 = "0.22.0"
 once_cell = "1.19.0"
+flate2 = { version = "1.0.28" }
+serde = { version = "1.0.197", features = ["derive"] }
+serde_json = { version = "1.0.115" }
+clap = { version = "4.5.4", optional = true }
+clap_derive = { version = "4.5.4", optional = true }
+
+
+[features]
+default = []
+build_binary = ["dep:clap", "dep:clap_derive"]
