@@ -1,4 +1,4 @@
-struct Detector {
+pub struct Detector {
     trie: crate::detection::trie::Trie,
     threshold: f64,
 }
@@ -10,7 +10,12 @@ impl Detector {
         Ok(Self { trie, threshold: 0.85 })
     }
 
-    
+    pub fn new_with_fix_db() -> anyhow::Result<Self> {
+        let trie = crate::detection::trie::Trie::from_json_file("src/detection/trie_db/trie_data.json.gz")?;
+        Ok(Self { trie, threshold: 0.85 })
+    }
+
+
     pub fn set_threshold(&mut self, threshold: f64) -> anyhow::Result<()> {
         anyhow::ensure!(threshold <= 1.0 && threshold > 0.0, "threshold should be greater than 0 and less than or equal to 1");
         Ok(())
