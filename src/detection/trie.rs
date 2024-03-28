@@ -106,16 +106,16 @@ impl Iterator for TrieIterator {
 
     fn next(&mut self) -> Option<Self::Item> {
         while let Some((mut prefix, mut node)) = self.stack.pop() {
-            if node.is_end_of_word {
-                let word = prefix.clone();
-                prefix.pop();
-                return Some(word);
-            }
-
             for (ch, child) in node.children.iter_mut() {
                 let mut new_prefix = prefix.clone();
                 new_prefix.push(*ch);
                 self.stack.push((new_prefix, child.clone()));
+            }
+
+            if node.is_end_of_word {
+                let word = prefix.clone();
+                prefix.pop();
+                return Some(word);
             }
         }
         None

@@ -1,3 +1,5 @@
+use crate::detection::trie::TrieIterator;
+
 pub struct Detector {
     trie: crate::detection::trie::Trie,
     threshold: f64,
@@ -34,6 +36,11 @@ impl Detector {
             }
         }
         (english_matches as f64 / total_words as f64) >= self.threshold
+    }
+
+
+    pub fn iter_dictionary_words(&self) -> TrieIterator {
+        self.trie.iter_words()
     }
 }
 
